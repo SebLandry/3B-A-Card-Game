@@ -19,11 +19,6 @@ public class StartNewRoundButton : NetworkBehaviour
     CmdGetLastRiverCard();
   }
 
-  public void LogClick()
-  {
-    Debug.Log("Button clicked");
-  }
-
   [Command(requiresAuthority = false)]
   public void CmdGetLastRiverCard()
   {

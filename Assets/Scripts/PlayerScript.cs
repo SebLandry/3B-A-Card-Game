@@ -62,6 +62,8 @@ namespace QuickStart
         Debug.Log($"assiging authority to: {card.name}");
         card.netIdentity.AssignClientAuthority(this.netIdentity.connectionToClient);
         card.gameObject.GetComponent<FaceSelector>().RpcSetFaceUp();
+        Debug.Log($"Setting player card back. Player id: {this.connectionToClient.connectionId}");
+        card.gameObject.GetComponent<FaceSelector>().RpcSetCardBack(this.connectionToClient.connectionId);
         card.transform.SetPositionAndRotation(mPlayerHandPos[wIndex], Quaternion.identity);
         wIndex++;
       }

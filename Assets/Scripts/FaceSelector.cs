@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using System;
 
 public class FaceSelector : NetworkBehaviour
 {
@@ -13,31 +14,8 @@ public class FaceSelector : NetworkBehaviour
   public string mName;
   [SyncVar]
   public bool mIsRiverCard = false;
-
-  public void SetFaceUp()
-  {
-    transform.GetComponent<SpriteRenderer>().sprite = mCardFace;
-  }
-
-  [ClientRpc]
-  public void RpcSetIsRiverCard(bool iIsRiverCard)
-  {
-    mIsRiverCard = iIsRiverCard;
-  }
-
-  [ClientRpc]
-  public void RpcSetFaceUp()
-  {
-    if (hasAuthority || mIsRiverCard)
-    {
-      SetFaceUp();
-    }
-  }
-
-  public void SetFaceDown()
-  {
-    transform.GetComponent<SpriteRenderer>().sprite = mCardBack;
-  }
+  [SyncVar]
+  public int mRow = 0;
 
   void Start()
   {
@@ -57,20 +35,11 @@ public class FaceSelector : NetworkBehaviour
   private bool mOnAuthorityFirstPass = true;
   void Update()
   {
-    // if (hasAuthority)
-    // {
-    //   Debug.Log("setting Faceup");
-    //   //if (mOnAuthorityFirstPass)
-    //   {
-    //     SetFaceUp();
-    //     mOnAuthorityFirstPass = false;
-    //   }
-    // }
+
   }
 
   private void InitializeCardFace()
   {
-    //this.GetComponentInParent<SpriteRenderer>().sprite = FindCardSprite(mName);
     mCardFace = FindCardSprite(mName);
   }
   public Sprite FindCardSprite(string iName)
@@ -85,5 +54,65 @@ public class FaceSelector : NetworkBehaviour
     // Should not get here
     Debug.Log("Error: CardFace NOT found!!");
     return mCardBack;
+  }
+
+  [ClientRpc]
+  public void RpcSetIsRiverCard(bool iIsRiverCard)
+  {
+    mIsRiverCard = iIsRiverCard;
+  }
+  public void SetFaceUp()
+  {
+    transform.GetComponent<SpriteRenderer>().sprite = mCardFace;
+  }
+
+  [ClientRpc]
+  public void RpcSetFaceUp()
+  {
+    if (hasAuthority || mIsRiverCard)
+    {
+      SetFaceUp();
+    }
+  }
+
+  [ClientRpc]
+  public void RpcRevealPlayerCards()
+  {
+    SetFaceUp();
+  }
+
+  public void SetFaceDown()
+  {
+    transform.GetComponent<SpriteRenderer>().sprite = mCardBack;
+  }
+
+  private string[] mCardBackNames = new string[6] { "blue_back", "gray_back", "green_back", "red_back", "purple_back", "yellow_back" };
+  [ClientRpc]
+  public void RpcSetCardBack(int iPlayerId)
+  {
+    var name = mCardBackNames[iPlayerId];
+    Debug.Log($"Setting Card Back for local card. looking for: {name}");
+    foreach (Sprite cardFace in mCardFaces)
+    {
+      if (cardFace.name == mCardBackNames[iPlayerId])
+      {
+        Debug.Log("Found a card back match");
+        mCardBack = cardFace;
+        break;
+      }
+    }
+    if (!hasAuthority)
+    {
+      SetFaceDown();
+    }
+  }
+
+  private void OnTriggerEnter(Collider other)
+  {
+    if (other.CompareTag("RowCollider"))
+    {
+      Debug.Log($"Collided with: {other.name}");
+      mRow = Int32.Parse(other.name.Substring(other.name.Length - 1)); // Assign the row number in the object name
+    }
   }
 }

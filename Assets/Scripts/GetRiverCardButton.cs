@@ -16,13 +16,8 @@ public class GetRiverCardButton : NetworkBehaviour
 
   void TaskOnClick()
   {
-    Debug.Log("You have clicked the button!");
+    Debug.Log("You have clicked the Get River Cards button!");
     CmdGetLastRiverCard();
-  }
-
-  public void LogClick()
-  {
-    Debug.Log("Button clicked");
   }
 
   [Command(requiresAuthority = false)]

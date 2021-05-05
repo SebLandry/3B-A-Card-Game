@@ -103,8 +103,9 @@ public class CardManager : NetworkBehaviour
         break;
       case 0:
         Debug.LogError("Wrong row selected from button press");
-        break;
+        return;
     }
+    RevealPlayerHiddenCards(iRow);
   }
 
   [Command(requiresAuthority = false)]
@@ -139,5 +140,16 @@ public class CardManager : NetworkBehaviour
     // Spawn new deck
     Debug.Log("Deck deleted, creating new deck");
     Instantiate(_DeckPrefab);
+  }
+
+  public void RevealPlayerHiddenCards(int iRow)
+  {
+    foreach (var card in GameObject.FindObjectsOfType<FaceSelector>())
+    {
+      if (card.mRow == iRow)
+      {
+        card.RpcRevealPlayerCards();
+      }
+    }
   }
 }

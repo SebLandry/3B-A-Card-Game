@@ -47,8 +47,7 @@ public class DeckOfCards : NetworkBehaviour
     var wOffsetZ = 0.0f;
     foreach (string card in mCardNames)
     {
-      GameObject wTempsCard = Instantiate(_CardObjectPrefab, new Vector3(1, 0, wOffsetZ), Quaternion.identity);
-
+      GameObject wTempsCard = Instantiate(_CardObjectPrefab, new Vector3(-80f, 45f, wOffsetZ), Quaternion.identity);
       // Set Card name so it can find its sprite
       wTempsCard.name = card;
       wTempsCard.GetComponent<FaceSelector>().mName = card;
