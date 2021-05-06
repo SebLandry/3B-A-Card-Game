@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - RowCollider
+  - Row1
+  - Row2
+  - Row3
   layers:
   - Default
   - TransparentFX

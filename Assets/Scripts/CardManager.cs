@@ -72,6 +72,9 @@ public class CardManager : NetworkBehaviour
   [Server]
   public void CmdGetLastRiverCard(int iRow)
   {
+    // if ( GameObject.Find($"RowCollider{iRow}").GetComponent<BoxCollider>().)
+    Debug.Log($"Row{iRow} card count: {CountRowPlayerCards(iRow)}, Network player count: {NetworkServer.connections.Count}");
+    if (CountRowPlayerCards(iRow) < (2 * NetworkServer.connections.Count)) { return; }
     switch (iRow)
     {
       case 1:
@@ -106,6 +109,12 @@ public class CardManager : NetworkBehaviour
         return;
     }
     RevealPlayerHiddenCards(iRow);
+  }
+
+  [Server]
+  private int CountRowPlayerCards(int iRow)
+  {
+    return GameObject.FindGameObjectsWithTag($"Row{iRow}").Length;
   }
 
   [Command(requiresAuthority = false)]

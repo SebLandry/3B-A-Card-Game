@@ -113,6 +113,7 @@ public class FaceSelector : NetworkBehaviour
     {
       Debug.Log($"Collided with: {other.name}");
       mRow = Int32.Parse(other.name.Substring(other.name.Length - 1)); // Assign the row number in the object name
+      gameObject.tag = $"Row{mRow}";
     }
   }
 }
