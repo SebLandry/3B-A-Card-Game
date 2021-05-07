@@ -9,6 +9,9 @@ public class BeerFill : NetworkBehaviour
   public Image[] mDrinks;
   private Coroutine mBeerCoroutine;
   [SyncVar] private float mFillAmount = 0.05f;
+
+  [SerializeField]
+  private float mFillRate = 0.005f;
   // Start is called before the first frame update
   void Start()
   {
@@ -47,7 +50,7 @@ public class BeerFill : NetworkBehaviour
   {
     while (mFillAmount <= 1f)
     {
-      mFillAmount += 0.002f;
+      mFillAmount += mFillRate;
       CmdUpdateFill(mFillAmount);
       yield return null;
     }
