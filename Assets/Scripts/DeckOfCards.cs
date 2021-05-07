@@ -71,6 +71,15 @@ public class DeckOfCards : NetworkBehaviour
     Card wCard = GetRandomCard();
     wCard.GetComponentInParent<FaceSelector>().mIsRiverCard = true;
     wCard.GetComponentInParent<FaceSelector>().RpcSetIsRiverCard(true); // Needed for timing purposes
+
+    return wCard;
+  }
+
+   public Card PlaceRiverAdditionnalCard()
+  {
+    Card wCard = GetRandomCard();
+    wCard.GetComponentInParent<FaceSelector>().mIsRiverCard = true;
+    wCard.GetComponentInParent<FaceSelector>().RpcSetIsRiverCard(true); // Needed for timing purposes
     wCard.GetComponentInParent<FaceSelector>().RpcSetFaceUp();
 
     return wCard;

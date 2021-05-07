@@ -22,20 +22,14 @@ public class FaceSelector : NetworkBehaviour
     mCardFaces = Resources.LoadAll<Sprite>("CardsPng");
     this.gameObject.name = mName;
     InitializeCardFace();
-    if (mIsRiverCard)
-    {
-      SetFaceUp();
-    }
-    else
-    {
+    // if (mIsRiverCard)
+    // {
+    //   SetFaceUp();
+    // }
+    // else
+    // {
       SetFaceDown();
-    }
-  }
-
-  private bool mOnAuthorityFirstPass = true;
-  void Update()
-  {
-
+    // }
   }
 
   private void InitializeCardFace()

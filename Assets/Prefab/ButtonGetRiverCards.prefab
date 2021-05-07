@@ -192,6 +192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9442ec6ea2edf1c4ca347734f99ce397, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   mRowNumber: 0
 --- !u!1 &8120228968294703618
 GameObject:
@@ -258,7 +260,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Get river cards
+  m_text: Reveal River
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

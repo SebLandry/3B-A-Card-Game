@@ -12,7 +12,7 @@ public class CardManager : NetworkBehaviour
   public GameObject[] mMiddlePos;
   public GameObject[] mBottomPos;
   public GameObject _DeckPrefab;
-  private bool[] mLastRiverCardPlaced = new bool[] { false, false, false };
+  private int[] mLastRiverCardPlaced = new int[] { 0, 0, 0 };
 
   // Start is called before the first frame update
   void Start()
@@ -77,37 +77,49 @@ public class CardManager : NetworkBehaviour
     switch (iRow)
     {
       case 1:
-        if (!mLastRiverCardPlaced[0])
+        if (mLastRiverCardPlaced[0] == 0)
         {
-          mDeck.PlaceRiverCard().transform.position = mTopPos[1].transform.position + new Vector3(3, 3, 0);
-          mDeck.PlaceRiverCard().transform.position = mTopPos[2].transform.position + new Vector3(3, 3, 0);
+          mDeck.PlaceRiverAdditionnalCard().transform.position = mTopPos[1].transform.position + new Vector3(3, 3, 0);
+          mLastRiverCardPlaced[0]++;
+        }
+        else if (mLastRiverCardPlaced[0] == 1)
+        {
           Debug.Log($"Handing out last cards for row {iRow}");
-          mLastRiverCardPlaced[0] = true;
+          mDeck.PlaceRiverAdditionnalCard().transform.position = mTopPos[2].transform.position + new Vector3(3, 3, 0);
+          mLastRiverCardPlaced[0]++;
         }
         break;
       case 2:
-        if (!mLastRiverCardPlaced[1])
+        if (mLastRiverCardPlaced[1] == 0)
         {
-          mDeck.PlaceRiverCard().transform.position = mMiddlePos[1].transform.position + new Vector3(3, 3, 0);
-          mDeck.PlaceRiverCard().transform.position = mMiddlePos[2].transform.position + new Vector3(3, 3, 0);
+          mDeck.PlaceRiverAdditionnalCard().transform.position = mMiddlePos[1].transform.position + new Vector3(3, 3, 0);
+          mLastRiverCardPlaced[1]++;
+        }
+        else if (mLastRiverCardPlaced[1] == 1)
+        {
           Debug.Log($"Handing out last cards for row {iRow}");
-          mLastRiverCardPlaced[1] = true;
+          mDeck.PlaceRiverAdditionnalCard().transform.position = mMiddlePos[2].transform.position + new Vector3(3, 3, 0);
+          mLastRiverCardPlaced[1]++;
         }
         break;
       case 3:
-        if (!mLastRiverCardPlaced[2])
+        if (mLastRiverCardPlaced[2] == 0)
         {
-          mDeck.PlaceRiverCard().transform.position = mBottomPos[1].transform.position + new Vector3(3, 3, 0);
-          mDeck.PlaceRiverCard().transform.position = mBottomPos[2].transform.position + new Vector3(3, 3, 0);
+          mDeck.PlaceRiverAdditionnalCard().transform.position = mBottomPos[1].transform.position + new Vector3(3, 3, 0);
+          mLastRiverCardPlaced[2]++;
+        }
+        else if (mLastRiverCardPlaced[2] == 1)
+        {
           Debug.Log($"Handing out last cards for row {iRow}");
-          mLastRiverCardPlaced[2] = true;
+          mDeck.PlaceRiverAdditionnalCard().transform.position = mBottomPos[2].transform.position + new Vector3(3, 3, 0);
+          mLastRiverCardPlaced[2]++;
         }
         break;
       case 0:
         Debug.LogError("Wrong row selected from button press");
         return;
     }
-    RevealPlayerHiddenCards(iRow);
+    RevealRiverHiddenCards(iRow);
   }
 
   [Server]
@@ -121,9 +133,9 @@ public class CardManager : NetworkBehaviour
   {
     // Reset Rows
     Debug.Log("New Round Button Pressed!");
-    mLastRiverCardPlaced[0] = false;
-    mLastRiverCardPlaced[1] = false;
-    mLastRiverCardPlaced[2] = false;
+    mLastRiverCardPlaced[0] = 0;
+    mLastRiverCardPlaced[1] = 0;
+    mLastRiverCardPlaced[2] = 0;
 
     // Delete cards
     Debug.Log("Deleting Cards");
@@ -160,7 +172,7 @@ public class CardManager : NetworkBehaviour
     return wRandomCard;
   }
 
-  public void RevealPlayerHiddenCards(int iRow)
+  public void RevealRiverHiddenCards(int iRow)
   {
     foreach (var card in GameObject.FindObjectsOfType<FaceSelector>())
     {

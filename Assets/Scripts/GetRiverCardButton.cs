@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
+using TMPro;
 public class GetRiverCardButton : NetworkBehaviour
 {
   [SerializeField]
   private int mRowNumber = 0;
+
+  [SyncVar]
+  private int mClickCount = 0;
 
   void Start()
   {
@@ -23,6 +27,32 @@ public class GetRiverCardButton : NetworkBehaviour
   [Command(requiresAuthority = false)]
   public void CmdGetLastRiverCard()
   {
-    GameObject.FindObjectOfType<CardManager>().CmdGetLastRiverCard(mRowNumber);
+    if (mClickCount < 1)
+    {
+      Debug.Log("Revealing river");
+      GameObject.FindObjectOfType<CardManager>().RevealRiverHiddenCards(mRowNumber);
+      mClickCount++;
+      RpcUpdateButtonText("Get a Card");
+    }
+    else if (mClickCount == 1)
+    {
+      Debug.Log("Getting first card");
+      GameObject.FindObjectOfType<CardManager>().CmdGetLastRiverCard(mRowNumber);
+      mClickCount++;
+      RpcUpdateButtonText("Get another Card");
+    }
+    else if (mClickCount > 1)
+    {
+      Debug.Log("Getting second card");
+      GameObject.FindObjectOfType<CardManager>().CmdGetLastRiverCard(mRowNumber);
+      NetworkServer.Destroy(this.gameObject);
+      mClickCount++;
+    }
+  }
+
+  [ClientRpc]
+  public void RpcUpdateButtonText(string iText)
+  {
+    gameObject.GetComponentInChildren<TMP_Text>().text = iText;
   }
 }
