@@ -851,6 +851,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RowCollider3
       objectReference: {fileID: 0}
+    - target: {fileID: 3846539434672570249, guid: 3a5553c51938c3a44b8c1394ed13d654, type: 3}
+      propertyPath: m_Size.z
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4960613275374324950, guid: 3a5553c51938c3a44b8c1394ed13d654, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -1279,6 +1283,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RowCollider2
       objectReference: {fileID: 0}
+    - target: {fileID: 3846539434672570249, guid: 3a5553c51938c3a44b8c1394ed13d654, type: 3}
+      propertyPath: m_Size.z
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4960613275374324950, guid: 3a5553c51938c3a44b8c1394ed13d654, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -1454,6 +1462,10 @@ PrefabInstance:
     - target: {fileID: 1462677276145982906, guid: 3a5553c51938c3a44b8c1394ed13d654, type: 3}
       propertyPath: m_Name
       value: RowCollider1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3846539434672570249, guid: 3a5553c51938c3a44b8c1394ed13d654, type: 3}
+      propertyPath: m_Size.z
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4960613275374324950, guid: 3a5553c51938c3a44b8c1394ed13d654, type: 3}
       propertyPath: m_RootOrder

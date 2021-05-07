@@ -74,7 +74,7 @@ public class CardManager : NetworkBehaviour
   {
     // if ( GameObject.Find($"RowCollider{iRow}").GetComponent<BoxCollider>().)
     Debug.Log($"Row{iRow} card count: {CountRowPlayerCards(iRow)}, Network player count: {NetworkServer.connections.Count}");
-    if (CountRowPlayerCards(iRow) < (2 * NetworkServer.connections.Count)) { return; }
+    //if (CountRowPlayerCards(iRow) < (2 * NetworkServer.connections.Count)) { return; }
     switch (iRow)
     {
       case 1:
@@ -117,8 +117,8 @@ public class CardManager : NetworkBehaviour
     return GameObject.FindGameObjectsWithTag($"Row{iRow}").Length;
   }
 
-  [Command(requiresAuthority = false)]
-  public void CmdStartNewRound()
+  [Server]
+  public void StartNewRound()
   {
     // Reset Rows
     Debug.Log("New Round Button Pressed!");

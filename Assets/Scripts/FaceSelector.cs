@@ -109,9 +109,9 @@ public class FaceSelector : NetworkBehaviour
 
   private void OnTriggerEnter(Collider other)
   {
+    Debug.Log($"Collided with: {other.name}");
     if (other.CompareTag("RowCollider"))
     {
-      Debug.Log($"Collided with: {other.name}");
       mRow = Int32.Parse(other.name.Substring(other.name.Length - 1)); // Assign the row number in the object name
       gameObject.tag = $"Row{mRow}";
     }

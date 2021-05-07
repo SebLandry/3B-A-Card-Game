@@ -6,7 +6,7 @@ using Mirror;
 
 public class BeerFill : NetworkBehaviour
 {
-  public Image mBeer;
+  public Image[] mDrinks;
   private Coroutine mBeerCoroutine;
   [SyncVar] private float mFillAmount = 0.05f;
   // Start is called before the first frame update
@@ -18,7 +18,10 @@ public class BeerFill : NetworkBehaviour
   // Update is called once per frame
   void Update()
   {
-    mBeer.fillAmount = mFillAmount;
+    foreach (var drink in mDrinks)
+    {
+      drink.fillAmount = mFillAmount;
+    }
   }
 
   void OnMouseDown()
@@ -37,15 +40,23 @@ public class BeerFill : NetworkBehaviour
   {
     Debug.Log("Reset Button clicked, emptying glass..");
     mFillAmount = 0.05f;
+    CmdUpdateFill(mFillAmount);
   }
 
   IEnumerator BeerFillCoroutine()
   {
-    while (mBeer.fillAmount <= 100)
+    while (mFillAmount <= 1f)
     {
       mFillAmount += 0.002f;
+      CmdUpdateFill(mFillAmount);
       yield return null;
     }
     Debug.Log("Glass is full");
+  }
+
+  [Command(requiresAuthority = false)]
+  private void CmdUpdateFill(float iFill)
+  {
+    mFillAmount = iFill;
   }
 }

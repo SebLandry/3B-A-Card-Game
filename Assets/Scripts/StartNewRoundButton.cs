@@ -16,12 +16,12 @@ public class StartNewRoundButton : NetworkBehaviour
   void TaskOnClick()
   {
     Debug.Log("You have clicked the New Round button");
-    CmdGetLastRiverCard();
+    CmdStartNewRound();
   }
 
   [Command(requiresAuthority = false)]
-  public void CmdGetLastRiverCard()
+  public void CmdStartNewRound()
   {
-    GameObject.FindObjectOfType<CardManager>().CmdStartNewRound();
+    GameObject.FindObjectOfType<CardManager>().StartNewRound();
   }
 }
