@@ -157,6 +157,12 @@ public class CardManager : NetworkBehaviour
       wPlayer.GetComponent<QuickStart.PlayerScript>().mHasCard = false;
     }
 
+    // Reset buttons
+    var wButtons = GameObject.FindObjectsOfType<GetRiverCardButton>();
+    foreach(var button in wButtons)
+    {
+      button.RpcResetButon();
+    }
     // Spawn new deck
     Debug.Log("Deck deleted, creating new deck");
     Instantiate(_DeckPrefab);

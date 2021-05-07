@@ -17,7 +17,7 @@ public class ScriptBatch
     string[] levels = new string[] { "Assets/Scenes/GameMainScene.unity" };
 
     // Build player.
-    BuildPipeline.BuildPlayer(levels, path + "WindowsClient/3B-A-Card-Game.exe", BuildTarget.StandaloneWindows, BuildOptions.ShowBuiltPlayer);
+    BuildPipeline.BuildPlayer(levels, path + "WindowsClient/3B-A-Card-Game.exe", BuildTarget.StandaloneWindows, BuildOptions.None);
     BuildPipeline.BuildPlayer(levels, path + "WindowsServer/3B-A-Card-Game-SERVER.exe", BuildTarget.StandaloneWindows, BuildOptions.EnableHeadlessMode);
     BuildPipeline.BuildPlayer(levels, path + "WebClient", BuildTarget.WebGL, BuildOptions.None);
   }

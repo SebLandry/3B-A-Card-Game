@@ -45,7 +45,8 @@ public class GetRiverCardButton : NetworkBehaviour
     {
       Debug.Log("Getting second card");
       GameObject.FindObjectOfType<CardManager>().CmdGetLastRiverCard(mRowNumber);
-      NetworkServer.Destroy(this.gameObject);
+      // NetworkServer.Destroy(this.gameObject);
+      RpcUpdateButtonText("");
       mClickCount++;
     }
   }
@@ -54,5 +55,12 @@ public class GetRiverCardButton : NetworkBehaviour
   public void RpcUpdateButtonText(string iText)
   {
     gameObject.GetComponentInChildren<TMP_Text>().text = iText;
+  }
+
+  [ClientRpc]
+  public void RpcResetButon()
+  {
+    mClickCount = 0;
+    gameObject.GetComponentInChildren<TMP_Text>().text = "Reveal river";
   }
 }
