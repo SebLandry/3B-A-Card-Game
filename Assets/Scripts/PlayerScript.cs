@@ -27,7 +27,7 @@ namespace QuickStart
       Debug.Log("Setting Player Pos");
       for (int i = 0; i < 6; i++)
       {
-        mPlayerHandPos[i] = transform.position + new Vector3(i*3.0f, 0.0f, -i*0.2f);
+        mPlayerHandPos[i] = transform.position + new Vector3(i * 3.0f, 0.0f, -i * 0.2f);
       }
     }
 
@@ -44,6 +44,12 @@ namespace QuickStart
       if (!mHasCard && Input.GetKeyDown(KeyCode.R))
       {
         CmdRequestPlayerCards();
+      }
+
+      //Pige dans le lac
+      if (!mHasCard && Input.GetKeyDown(KeyCode.T))
+      {
+        CmdRequestPigeDansLeLacCard();
       }
 
       CameraZoom();
@@ -68,6 +74,18 @@ namespace QuickStart
         wIndex++;
       }
       mHasCard = true;
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdRequestPigeDansLeLacCard()
+    {
+      Card wCard = GameObject.FindObjectOfType<CardManager>().GetPigeDansLeLacCard();
+      // wCard.gameObject.GetComponent<FaceSelector>().RpcRevealCard();
+      wCard.netIdentity.AssignClientAuthority(this.netIdentity.connectionToClient);
+      wCard.gameObject.GetComponent<FaceSelector>().RpcSetFaceUp();
+      wCard.gameObject.GetComponent<FaceSelector>().RpcSetCardBack(this.connectionToClient.connectionId);
+      wCard.transform.SetPositionAndRotation(mPlayerHandPos[1], Quaternion.identity);
+
     }
 
     private void CameraZoom()

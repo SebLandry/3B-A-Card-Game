@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using TMPro;
+using System;
 
 public class CardManager : NetworkBehaviour
 {
@@ -10,7 +11,6 @@ public class CardManager : NetworkBehaviour
   public GameObject[] mTopPos;
   public GameObject[] mMiddlePos;
   public GameObject[] mBottomPos;
-  public GameObject[] mPlayerHandPos;
   public GameObject _DeckPrefab;
   private bool[] mLastRiverCardPlaced = new bool[] { false, false, false };
 
@@ -59,10 +59,9 @@ public class CardManager : NetworkBehaviour
   {
     Debug.Log("Card Manager: getting card from deck.");
     List<Card> wReturnCards = new List<Card>();
-    foreach (var pos in mPlayerHandPos)
+    for (int idx = 0; idx < 6; idx++)
     {
       var wRandomCard = mDeck.GetRandomCard();
-      wRandomCard.transform.position = pos.transform.position;
 
       wReturnCards.Add(wRandomCard);
     }
@@ -151,14 +150,35 @@ public class CardManager : NetworkBehaviour
     Instantiate(_DeckPrefab);
   }
 
+  [Server]
+  public Card GetPigeDansLeLacCard()
+  {
+    //StartNewRound();
+    Debug.Log("Card Manager: getting card from deck.");
+
+    var wRandomCard = mDeck.GetRandomCard();
+    return wRandomCard;
+  }
+
   public void RevealPlayerHiddenCards(int iRow)
   {
     foreach (var card in GameObject.FindObjectsOfType<FaceSelector>())
     {
       if (card.mRow == iRow)
       {
-        card.RpcRevealPlayerCards();
+        card.RpcRevealCard();
       }
+    }
+  }
+
+  [Server]
+  public void RevealAllCards()
+  {
+    var wCards = GameObject.FindObjectsOfType<FaceSelector>();
+    Debug.Log($"Revealing card from card manager. Card amount: {wCards.Length}");
+    foreach (var card in wCards)
+    {
+      card.RpcRevealCard();
     }
   }
 }

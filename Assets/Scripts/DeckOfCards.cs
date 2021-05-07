@@ -20,12 +20,6 @@ public class DeckOfCards : NetworkBehaviour
     InitializeDeck();
   }
 
-  // Update is called once per frame
-  void Update()
-  {
-
-  }
-
   public void InitializeDeck()
   {
     mCardNames = new List<string>();
@@ -94,15 +88,8 @@ public class DeckOfCards : NetworkBehaviour
   [Command(requiresAuthority = false)]
   public void CmdDeleteCards()
   {
-    // foreach (var card in mCards)
-    // {
-    //   NetworkServer.Destroy(card.Value.gameObject);
-    //   // Destroy(card.Value.gameObject);
-    // }
-    // NetworkServer.Destroy(this.gameObject);
-    // // Destroy(this.gameObject);
     var wCards = GameObject.FindObjectsOfType<Card>();
-    foreach(var card in wCards)
+    foreach (var card in wCards)
     {
       Debug.Log($"Destroying: {card.name}");
       NetworkServer.Destroy(card.gameObject);

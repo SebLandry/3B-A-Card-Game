@@ -7,6 +7,7 @@ public class DragObject : NetworkBehaviour
 {
   private Vector3 mOffset;
   private float mZCoord;
+
   void OnMouseDown()
   {
     if (hasAuthority)

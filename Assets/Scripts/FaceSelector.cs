@@ -76,8 +76,9 @@ public class FaceSelector : NetworkBehaviour
   }
 
   [ClientRpc]
-  public void RpcRevealPlayerCards()
+  public void RpcRevealCard()
   {
+    Debug.Log("Setting face up (revealing)");
     SetFaceUp();
   }
 
